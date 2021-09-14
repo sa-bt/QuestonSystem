@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\Api\V01\Auth\AuthController;
-use App\Http\Controllers\Api\V01\ChannelController;
+use App\Http\Controllers\Api\V1\Auth\AuthController;
+use App\Http\Controllers\Api\V1\ChannelController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,10 +20,5 @@ use Illuminate\Support\Facades\Route;
 //    return $request->user();
 //});
 
-Route::prefix('v1/auth')->group(function(){
-    Route::post('register',[AuthController::class,'register'])->name('register');
-    Route::post('login',[AuthController::class,'login'])->name('login');
-    Route::post('logout',[AuthController::class,'logout'])->name('logout');
-    Route::get('user',[AuthController::class,'user'])->name('user');
-    Route::apiResource('channel',ChannelController::class);
-});
+include __DIR__ . '/v1/auth.php';
+Route::apiResource('channel', ChannelController::class);

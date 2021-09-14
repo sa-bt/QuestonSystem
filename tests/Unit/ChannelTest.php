@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class ChannelControllerTest extends TestCase
+class ChannelTest extends TestCase
 {
     /**
      * A basic unit test example.
