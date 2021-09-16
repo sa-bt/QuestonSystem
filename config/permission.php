@@ -152,19 +152,22 @@ return [
         'store' => 'default',
 
 
-        'default_super_admin_email' => 'sa.bt@chmail.ir',
-
-        'default_roles'=>[
-            'Super Admin',
-            'User'
-        ],
-
-        'default_permission'=>[
-          'user management',
-          'channel management',
-          'thread management',
-          'answer management',
-        ],
 
     ],
+    'default_super_admin_email' =>[
+        'sa.bt@chmail.ir',
+        ],
+
+    'default_roles'=>[
+        'Super Admin',
+        'User'
+    ],
+
+    'default_permissions'=>[
+        'user management',
+        'channel management',
+        'thread management',
+        'answer management',
+    ],
+
 ];

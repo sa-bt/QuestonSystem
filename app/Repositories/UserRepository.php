@@ -14,10 +14,14 @@ class UserRepository
 
     public function create(Request $request)
     {
-        User::query()->create([
-                                  'name'     => $request->name,
-                                  'email'    => $request->email,
-                                  'password' => Hash::make($request->password),
-                              ]);
+        $user = User::query()->create([
+                                          'name'     => $request->name,
+                                          'email'    => $request->email,
+                                          'password' => Hash::make($request->password),
+                                      ]);
+        in_array($user->email, config('permission.default_super_admin_email')) ?
+            $user->assignRole('Super Admin') :
+            $user->assignRole('User');
+
     }
 }

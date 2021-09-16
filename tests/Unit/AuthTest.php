@@ -3,7 +3,9 @@
 namespace Tests\Unit;
 
 use App\Models\User;
+use Database\Seeders\RoleAndPermissionSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Artisan;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -22,6 +24,9 @@ class AuthTest extends TestCase
 
     public function test_new_user_can_register()
     {
+        Artisan::call('db:seed', [
+            '--class' => 'RoleAndPermissionSeeder',
+        ]);
         $response = $this->postJson(route('register'), [
             "name"     => "Seyed Ahmad Bakhshian",
             "email"    => "sa.bt@chmail.ir",

@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ChannelController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:channel_management'])->only('store');
+    }
 
     public function index()
     {
