@@ -27,24 +27,32 @@ class ThreadRepository
 
     public function create(Request $request)
     {
-        Channel::query()->create([
-                                     'name' => $request->name,
-                                     'slug' => Str::slug($request->name),
-                                 ]);
+        Thread::query()->create([
+                                    'title'      => $request->input('title'),
+                                    'slug'       => Str::slug($request->input('title')),
+                                    'content'    => $request->input('content'),
+                                    'channel_id' => $request->input('channel_id'),
+                                    'user_id'    => $request->user()->id,
+                                ]);
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request, Thread $thread)
     {
-
-        Channel::query()->find($id)->update([
-                                                'name' => $request->name,
-                                                'slug' => Str::slug($request->name),
-                                            ]);
+        $request->has('best_answer_id') ?
+            $thread->update([
+                                'answer_id' => $request->input('best_answer_id')
+                            ]) :
+            $thread->update([
+                                'title'      => $request->input('title'),
+                                'slug'       => Str::slug($request->input('title')),
+                                'content'    => $request->input('content'),
+                                'channel_id' => $request->input('channel_id'),
+                                'user_id'    => $request->user()->id,
+                            ]);
     }
 
-    public function delete($id)
+    public function delete(Thread $thread)
     {
-
-        Channel::query()->find($id)->delete();
+        $thread->delete();
     }
 }
