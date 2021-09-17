@@ -12,7 +12,7 @@ class ChannelController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:channel_management'])->only('store');
+        $this->middleware(['permission:channel management','auth:sanctum'])->only('store');
     }
 
     public function index()

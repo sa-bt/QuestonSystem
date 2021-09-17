@@ -3,7 +3,10 @@
 namespace Tests\Unit;
 
 use App\Models\Channel;
+use App\Models\User;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Str;
+use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
@@ -24,6 +27,13 @@ class ChannelTest extends TestCase
 
     public function test_channel_can_be_created()
     {
+        Artisan::call('db:seed', [
+            '--class' => 'RoleAndPermissionSeeder',
+        ]);
+
+        $user = User::factory()->create();
+        $user->givePermissionTo('channel management');
+        Sanctum::actingAs($user);
         $response = $this->postJson(route('channel.store'), [
             'name' => 'test',
         ]);
@@ -34,6 +44,9 @@ class ChannelTest extends TestCase
 
     public function test_channel_before_create_should_be_validate()
     {
+        $user = User::factory()->create();
+        $user->givePermissionTo('channel management');
+        Sanctum::actingAs($user);
         $response = $this->postJson(route('channel.store'), []);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\ChannelController;
+use App\Http\Controllers\Api\V1\ThreadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +22,6 @@ use Illuminate\Support\Facades\Route;
 //});
 
 include __DIR__ . '/v1/auth.php';
+
 Route::apiResource('channel', ChannelController::class);
+Route::apiResource('thread', ThreadController::class);
