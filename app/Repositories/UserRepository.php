@@ -24,4 +24,9 @@ class UserRepository
             $user->assignRole('User');
 
     }
+
+    public function find($id)
+    {
+        return User::query()->find($id);
+    }
 }

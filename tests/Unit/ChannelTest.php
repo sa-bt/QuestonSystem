@@ -19,7 +19,7 @@ class ChannelTest extends TestCase
      */
     public function test_all_channels_list_should_be_accessible()
     {
-        $response = $this->get(route('channel.index'));
+        $response = $this->get(route('channels.index'));
 
         $response->assertStatus(Response::HTTP_OK);
     }
@@ -34,11 +34,11 @@ class ChannelTest extends TestCase
         $user = User::factory()->create();
         $user->givePermissionTo('channel management');
         Sanctum::actingAs($user);
-        $response = $this->postJson(route('channel.store'), [
+        $response = $this->postJson(route('channels.store'), [
             'name' => 'test',
         ]);
 
-        $response->assertStatus(201);
+        $response->assertStatus(Response::HTTP_CREATED);
     }
 
 
@@ -47,7 +47,7 @@ class ChannelTest extends TestCase
         $user = User::factory()->create();
         $user->givePermissionTo('channel management');
         Sanctum::actingAs($user);
-        $response = $this->postJson(route('channel.store'), []);
+        $response = $this->postJson(route('channels.store'), []);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -56,7 +56,7 @@ class ChannelTest extends TestCase
     {
         $channel = Channel::factory()->create();
 
-        $response = $this->putJson(route('channel.update', $channel->id), []);
+        $response = $this->putJson(route('channels.update', $channel->id), []);
 
         $response->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -65,7 +65,7 @@ class ChannelTest extends TestCase
     {
         $channel = Channel::factory()->create();
 
-        $response = $this->putJson(route('channel.update', $channel->id), [
+        $response = $this->putJson(route('channels.update', $channel->id), [
             'name' => 'Seyed Ahmad Bakhshian'
         ]);
 
@@ -80,8 +80,9 @@ class ChannelTest extends TestCase
     {
         $channel = Channel::factory()->create();
 
-        $response = $this->deleteJson(route('channel.destroy', $channel->id));
+        $response = $this->deleteJson(route('channels.destroy', $channel->id));
 
         $response->assertStatus(Response::HTTP_OK);
+        $this->assertTrue(Channel::query()->whereId($channel->id)->count()=== 0);
     }
 }

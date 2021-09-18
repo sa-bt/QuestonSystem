@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\V1\AnswerController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\ChannelController;
 use App\Http\Controllers\Api\V1\ThreadController;
@@ -23,5 +24,8 @@ use Illuminate\Support\Facades\Route;
 
 include __DIR__ . '/v1/auth.php';
 
-Route::apiResource('channel', ChannelController::class);
-Route::apiResource('thread', ThreadController::class);
+Route::apiResource('channels', ChannelController::class);
+Route::apiResource('threads', ThreadController::class);
+Route::prefix('threads')->group(function (){
+    Route::apiResource('answers', AnswerController::class);
+});
