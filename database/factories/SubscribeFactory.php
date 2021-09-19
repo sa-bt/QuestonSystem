@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use App\Models\Subscribe;
+use App\Models\Thread;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SubscribeFactory extends Factory
@@ -22,7 +24,8 @@ class SubscribeFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'thread_id'=>Thread::factory()->create()->id,
+            'user_id'=>User::factory()->create()->id
         ];
     }
 }

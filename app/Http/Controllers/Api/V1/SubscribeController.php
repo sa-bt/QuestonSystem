@@ -25,11 +25,11 @@ class SubscribeController extends Controller
     {
         Subscribe::query()->where([
             ['thread_id'=>$thread->id],
-            ['user_id'=>auth()->id],
+            ['user_id'=>auth()->user()->id],
                                   ])
         ->delete();
         return response()->json([
                                     "message" => "user unSubscribed successfully."
-                                ], Response::HTTP_CREATED);
+                                ], Response::HTTP_OK);
     }
 }

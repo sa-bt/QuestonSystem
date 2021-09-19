@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Thread extends Model
 {
     use HasFactory;
-protected $guarded=[];
+    protected $guarded = [];
 
     public function channel()
     {
@@ -23,5 +23,10 @@ protected $guarded=[];
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function subscribes()
+    {
+        return $this->hasMany(Subscribe::class);
     }
 }
