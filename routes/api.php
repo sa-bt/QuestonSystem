@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\ChannelController;
 use App\Http\Controllers\Api\V1\SubscribeController;
 use App\Http\Controllers\Api\V1\ThreadController;
+use App\Http\Controllers\Api\V1\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,4 @@ Route::prefix('/threads')->group(function (){
     Route::post('{thread}/subscribe',[SubscribeController::class,'Subscribe'])->name('subscribe');
     Route::post('{thread}/unsubscribe',[SubscribeController::class,'unSubscribe'])->name('unsubscribe');
 });
-
+Route::get('leaders',[UserController::class,'leaderBoards'])->name('leaderBoards');

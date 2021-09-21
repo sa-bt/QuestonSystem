@@ -19,6 +19,14 @@ use Symfony\Component\HttpFoundation\Response;
 class AnswerController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware(['user-block'])->except([
+                                                      'show',
+                                                      'index'
+                                                  ]);
+    }
+
     public function index()
     {
         $answers = resolve(AnswerRepository::class)->all();
@@ -37,11 +45,19 @@ class AnswerController extends Controller
 
         $thread = $request->input('thread_id');
 
-        $notifiableUserIds = resolve(SubscribeRepository::class)->getNotifiableUserIds($thread);
-        $notifiableUsers   = resolve(UserRepository::class)->find($notifiableUserIds);
-        Notification::send($notifiableUsers, new AnswerNotification(Thread::query()->find($thread)));
+        //Fetch users id which subscribed to a thread id
+        $notifiableUsersId = resolve(SubscribeRepository::class)->getNotifiableUsersId($thread);
+        //Get user instance from id
+        $notifiableUsers = resolve(UserRepository::class)->find($notifiableUsersId);
+        //Send answer notification to subscribed users
+        $thread = Thread::query()->find($thread);
+        Notification::send($notifiableUsers, new AnswerNotification($thread));
 
-
+        //Increase user score
+        if ($thread->user_id != auth()->id())
+        {
+            auth()->user()->increment('score', 10);
+        }
         return response()->json([
                                     "message" => "answer created successfully."
                                 ], Response::HTTP_CREATED);

@@ -71,7 +71,7 @@ class AuthTest extends TestCase
     public function test_show_user_info_if_logged_in()
     {
         $user     = User::factory()->create();
-        $response = $this->getJson(route('user'));
+        $response = $this->getJson(route('user_info'));
         $response->assertStatus(Response::HTTP_OK);
     }
 }

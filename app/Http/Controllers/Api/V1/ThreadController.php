@@ -11,6 +11,14 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ThreadController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['user-block'])->except([
+                                                      'show',
+                                                      'index'
+                                                  ]);
+    }
+
     public function index()
     {
         $threads = resolve(ThreadRepository::class)->all();

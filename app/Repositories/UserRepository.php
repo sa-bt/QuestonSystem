@@ -29,4 +29,14 @@ class UserRepository
     {
         return User::query()->find($id);
     }
+
+    public function leaderBoards()
+    {
+        return User::query()->orderByDesc('score')->paginate(20);
+    }
+
+    public function isBlock()
+    {
+        return (bool) auth()->user()->is_block;
+    }
 }

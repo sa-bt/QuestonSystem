@@ -14,7 +14,7 @@ class SubscribeRepository
 {
 
 
-    public function getNotifiableUserIds($thread)
+    public function getNotifiableUsersId($thread)
     {
         return Subscribe::query()
                         ->where('thread_id', '=', $thread)
