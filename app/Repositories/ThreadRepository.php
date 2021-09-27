@@ -15,7 +15,7 @@ class ThreadRepository
 
     public function all()
     {
-        return Thread::query()->whereflag(1)->latest()->get();
+        return Thread::query()->with(['user:id,name','channel:id,name,slug'])->whereflag(1)->latest()->get();
     }
 
 
